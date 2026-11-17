@@ -1,0 +1,118 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+/* NEUROCURSOR tokens */
+@theme inline {
+  --font-sans: 'Geist Variable', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, monospace;
+
+  --color-bg: #090b16;
+  --color-bg2: #171a35;
+  --color-violet: #8b5cf6;
+  --color-cyan: #22d3ee;
+  --color-lavender: #a78bfa;
+  --color-text: #f8fafc;
+  --color-text2: #94a3b8;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* shadcn semantic colors mapped onto the tokens */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-card: var(--bg2);
+  --color-card-foreground: var(--fg);
+  --color-popover: var(--bg2);
+  --color-popover-foreground: var(--fg);
+  --color-primary: #8b5cf6;
+  --color-primary-foreground: #f8fafc;
+  --color-secondary: rgb(255 255 255 / 0.07);
+  --color-secondary-foreground: var(--fg);
+  --color-muted: rgb(255 255 255 / 0.06);
+  --color-muted-foreground: #94a3b8;
+  --color-accent: rgb(139 92 246 / 0.18);
+  --color-accent-foreground: var(--fg);
+  --color-destructive: #ef4444;
+  --color-border: rgb(255 255 255 / 0.09);
+  --color-input: rgb(255 255 255 / 0.12);
+  --color-ring: #22d3ee;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+}
+
+:root {
+  --bg: #090b16;
+  --fg: #f8fafc;
+  --radius: 0.75rem;
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-bg text-text antialiased;
+    margin: 0;
+    min-height: 100vh;
+  }
+  /* Subtle, static grid behind everything (no animation, no cost). */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgb(139 92 246 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(139 92 246 / 0.06) 1px, transparent 1px),
+      radial-gradient(ellipse at 20% 0%, rgb(139 92 246 / 0.16), transparent 55%),
+      radial-gradient(ellipse at 90% 100%, rgb(34 211 238 / 0.08), transparent 50%);
+    background-size: 56px 56px, 56px 56px, auto, auto;
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(160deg, rgb(23 26 53 / 0.72), rgb(23 26 53 / 0.42));
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(10px);
+  }
+  /* Glow is reserved for elements that are currently active. */
+  .glow-active {
+    border-color: rgb(34 211 238 / 0.45);
+    box-shadow: 0 0 0 1px rgb(34 211 238 / 0.15), 0 0 24px -6px rgb(34 211 238 / 0.45);
+  }
+  .glow-violet {
+    border-color: rgb(139 92 246 / 0.55);
+    box-shadow: 0 0 24px -6px rgb(139 92 246 / 0.6);
+  }
+  .label-caps {
+    @apply font-mono text-[0.68rem] uppercase tracking-[0.14em] text-text2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Expanding ring where a simulated click landed. */
+@keyframes ripple-out {
+  from { width: 12px; height: 12px; opacity: 0.9; }
+  to { width: 110px; height: 110px; opacity: 0; }
+}
+.ripple { animation: ripple-out 0.7s ease-out forwards; }

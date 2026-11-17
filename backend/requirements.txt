@@ -1,0 +1,15 @@
+# Backend dependencies, pinned to the versions installed and tested on Python 3.12.8.
+fastapi==0.162.3
+uvicorn[standard]==0.54.0
+pydantic==2.14.3
+pytest==9.2.0
+# M3 vision. mediapipe requires the contrib build of OpenCV: do not also install opencv-python.
+opencv-contrib-python==5.0.0.93
+mediapipe==1.2.2
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
+# M4 EEG. BrainFlow provides the synthetic board and the playback board; real headsets need no extra dependency here.
+brainflow==5.24.0
+# Imported lazily, only by OSCursor (never touched unless the user opts in).
+pyautogui==0.9.54
